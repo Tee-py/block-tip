@@ -5,6 +5,7 @@
     "hardhat": "^2.22.13"
   },
   "dependencies": {
-    "@reclaimprotocol/verifier-solidity-sdk": "^1.0.4"
+    "@reclaimprotocol/verifier-solidity-sdk": "^1.0.4",
+    "hardhat-abi-exporter": "^2.10.1"
   }
 }
