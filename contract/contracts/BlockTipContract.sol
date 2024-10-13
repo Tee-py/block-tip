@@ -57,15 +57,11 @@ contract SocialDonation {
         require(bytes(toId).length > 0, "Beneficiary ID is required");
 
         if (token == address(0)) {
-            // Donation in native currency (e.g., ETH)
             require(msg.value == amount, "Incorrect ETH amount");
         } else {
-            // Donation in ERC-20 token
             require(msg.value == 0, "ETH not accepted for token donations");
             require(IERC20(token).transferFrom(msg.sender, address(this), amount), "Token transfer failed");
         }
-
-        // Record the donation
         donations.push(Donation({
             donor: msg.sender,
             fromId: fromId,
