@@ -5,8 +5,9 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 const BlockTipModule = buildModule("BlockTipModule", (m) => {
   const reclaimAddress = "0xF90085f5Fd1a3bEb8678623409b3811eCeC5f6A5";
+  const supportedPlatforms = ["x", "github", "discord"]
 
-  const SocialDonation = m.contract("SocialDonation", [reclaimAddress]);
+  const SocialDonation = m.contract("SocialDonation", [reclaimAddress, supportedPlatforms]);
 
   return { SocialDonation };
 });

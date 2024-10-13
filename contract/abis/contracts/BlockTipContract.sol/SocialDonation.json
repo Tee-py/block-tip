@@ -5,6 +5,11 @@
         "internalType": "address",
         "name": "_reclaimAddress",
         "type": "address"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_supportedPlatforms",
+        "type": "string[]"
       }
     ],
     "stateMutability": "nonpayable",
@@ -58,9 +63,9 @@
       },
       {
         "indexed": false,
-        "internalType": "enum SocialDonation.Platform",
+        "internalType": "string",
         "name": "platform",
-        "type": "uint8"
+        "type": "string"
       },
       {
         "indexed": false,
@@ -83,6 +88,19 @@
     ],
     "name": "DonationCreated",
     "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_platform",
+        "type": "string"
+      }
+    ],
+    "name": "addPlatform",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -178,9 +196,9 @@
         "type": "string"
       },
       {
-        "internalType": "enum SocialDonation.Platform",
+        "internalType": "string",
         "name": "platform",
-        "type": "uint8"
+        "type": "string"
       },
       {
         "internalType": "address",
@@ -229,9 +247,9 @@
         "type": "string"
       },
       {
-        "internalType": "enum SocialDonation.Platform",
+        "internalType": "string",
         "name": "platform",
-        "type": "uint8"
+        "type": "string"
       },
       {
         "internalType": "address",
@@ -302,9 +320,9 @@
         "type": "string"
       },
       {
-        "internalType": "enum SocialDonation.Platform",
+        "internalType": "string",
         "name": "platform",
-        "type": "uint8"
+        "type": "string"
       },
       {
         "internalType": "address",
@@ -319,6 +337,25 @@
       {
         "internalType": "bool",
         "name": "claimed",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "isSupportedPlatform",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
         "type": "bool"
       }
     ],

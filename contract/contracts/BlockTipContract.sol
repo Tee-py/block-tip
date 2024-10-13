@@ -10,18 +10,19 @@ interface IERC20 {
 }
 
 contract SocialDonation {
-    enum Platform { Twitter, GitHub }
     struct Donation {
         address donor;
         string fromId;
         string toId;
-        Platform platform;
+        string platform;
         address token;
         uint256 amount;
         bool claimed;
     }
     
     address public reclaimAddress;
+    address admin;
+    mapping(string => bool) public isSupportedPlatform;
     Donation[] public donations;
 
     event DonationCreated(
@@ -29,7 +30,7 @@ contract SocialDonation {
         address indexed donor,
         string fromId,
         string toId,
-        Platform platform,
+        string platform,
         address token,
         uint256 amount,
         string note
@@ -40,20 +41,31 @@ contract SocialDonation {
         address indexed beneficiary
     );
 
-    constructor(address _reclaimAddress) {
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not permitted");
+        _;
+    }
+
+    constructor(address _reclaimAddress, string[] memory _supportedPlatforms) {
         reclaimAddress = _reclaimAddress;
+        admin = msg.sender;
+
+        for (uint i = 0; i < _supportedPlatforms.length; i++) {
+            isSupportedPlatform[_supportedPlatforms[i]] = true;
+        }
     }
 
     function donate(
         string memory fromId,
         string memory toId,
-        Platform platform,
+        string memory platform,
         address token,
         uint256 amount,
         string memory note
     ) external payable {
         require(bytes(fromId).length > 0, "Donor ID is required");
         require(bytes(toId).length > 0, "Beneficiary ID is required");
+        require(isSupportedPlatform[platform], "Unsupported social platform");
 
         if (token == address(0)) {
             require(msg.value == amount, "Incorrect ETH amount");
@@ -94,7 +106,7 @@ contract SocialDonation {
         address donor,
         string memory fromId,
         string memory toId,
-        Platform platform,
+        string memory platform,
         address token,
         uint256 amount,
         bool claimed
@@ -109,6 +121,10 @@ contract SocialDonation {
             donation.amount,
             donation.claimed
         );
+    }
+
+    function addPlatform(string memory _platform) public onlyAdmin {
+        isSupportedPlatform[_platform] = true;
     }
 
     function extractFieldFromContext(
